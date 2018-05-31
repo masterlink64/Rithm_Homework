@@ -1,0 +1,45 @@
+.button {
+    background-color: skyblue; 
+    border: none;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    outline: none;
+}
+
+.button:hover {
+    background-color: darkblue;
+    color: white;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid black;
+}
+
+.card {
+    margin: 10px;
+    width: 425px;
+    height: 700px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    border-radius: 5px; 
+    background-color: gold;
+    
+}
+
+.card-text, .card-name {
+    margin: 5px;
+}
+
+img {
+    width: 100%;
+}
+
