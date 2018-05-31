@@ -60,3 +60,20 @@ img {
     align-content: center;
     border-radius: 5px; 
 }
+
+.gif1:hover .overlay .gif1text {
+    top: 0;
+}
+
+/* 
+by default, overlay is visible… 
+*/
+.overlay {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    overflow: hidden;
+    text-align: center;
+}
