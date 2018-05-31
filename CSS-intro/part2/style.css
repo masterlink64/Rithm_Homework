@@ -34,14 +34,16 @@ hr {
     background-color: gold;
     
 }
-
+/* mock 2 */
 .card-text, .card-name {
     margin: 5px;
 }
 
+/* mock 3*/
 img {
-    width: 95%;
-    height: 95%;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px; 
 }
 
 .gifs {
@@ -52,8 +54,9 @@ img {
 .gif1, .gif2, .gif3 {
     width: 250px;
     height: 250px;
-    background-color: peachpuff;
+    border: 5px solid peachpuff;
     position: flex;
     justify-content: center;
     align-content: center;
+    border-radius: 5px; 
 }
