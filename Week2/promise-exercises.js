@@ -77,9 +77,10 @@ Promise.race(twoPeople)
     if (name === 'Luke Skywalker') {
       console.log(`${name} has saved the universe!!!`)
     } else {
-      console.log(`${name} has taken over the universe.`)
+      // or use throw error
+      throw new Error('Darth Vader has taken over the universe.')
     }
   })
-  .catch(err => console.log('Vadar is a whiny baby'));
+  .catch(err => console.log(err));
 
 
