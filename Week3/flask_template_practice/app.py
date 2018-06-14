@@ -1,20 +1,22 @@
-from flask import Flask
-# create instance of the app
+from flask import Flask, request, render_template
 app = Flask(__name__)
 
 
 @app.route('/')
 def homepage():
-    return 'Homepage of Flask Calc'
+    return render_template('base.html')
 
 
-# math = {
-#     'add': lambda x, y: x + y,
-#     'sub': lambda x, y: x- y
-# }
-# make a dictionary then return it in the
-# results = math[oper](num1,num2)
-# return str(result)
+# this router should display the name and age entered for the URL
+#  should inherit from base.html
+@app.route('/person/<name>/<age>')
+def display_name(name, age):
+    return render_template('person.html', name=name, age=age)
+
+
+@app.route('/calculate')
+def calculator():
+    return render_template('new_calc.html')
 
 
 @app.route('/add/<num1>/<num2>')
@@ -44,8 +46,11 @@ def divide(num1, num2):
     return str(div)
 
 
-@app.route('/math/<oper>/<num1>/<num2>')
-def calc(oper, num1, num2):
+@app.route('/math')
+def calc():
+    num1 = request.args.get('num1')
+    num2 = request.args.get('num2')
+    oper = request.args.get('dropdown')
     if (oper == 'add'):
         return add(num1, num2)
     elif (oper == 'sub'):
