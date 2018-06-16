@@ -52,10 +52,11 @@ def calc():
     num2 = request.args.get('num2')
     oper = request.args.get('dropdown')
     if (oper == 'add'):
-        return add(num1, num2)
+        results = add(num1, num2)
     elif (oper == 'sub'):
-        return sub(num1, num2)
+        results = sub(num1, num2)
     elif (oper == 'mult'):
-        return multiply(num1, num2)
+        results = multiply(num1, num2)
     elif (oper == 'div'):
-        return divide(num1, num2)
+        results = divide(num1, num2)
+    return render_template('base.html', results=results)
