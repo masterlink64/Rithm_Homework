@@ -5,8 +5,9 @@
 <ul>
   {% for game in games %}
   <!-- we can use dot notation here because game is an object -->
-  <li>{{ game.name }}</li>
+  <li><a href="{{ url_for('show', id=game.id) }}">{{ game.name }}</a></li>
   {% endfor %}
 </ul>
 <a href="{{ url_for('new') }}">Add a new game!</a>
+<a href="{{ url_for('home') }}">Go Home</a>
 {% endblock %}

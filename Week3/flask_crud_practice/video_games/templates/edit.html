@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Edit this Game!</h1>
+<form action="{{ url_for('update', id=game.id) }}?_method=PATCH" method="POST">
+  <div>
+    <label for="name">Game Name:   
+    </label>
+    <input id="name" name="name" type="text" placeholder="Enter a new game name." value="{{ game.name }}"/>
+  </div>
+  <div>
+    <label for="system">System:    
+    </label>
+    <input id="system" name="system" type="text" placeholder="What system is the game on?" value="{{ game.system }}"/>
+  </div>
+  <div>
+    <label for="rating">Rating:   
+    </label>
+    <input id="rating" name="rating" type="number" placeholder="What is the rating?" value="{{ game.rating }}"/>
+    <input type="submit" value="Update game!">
+  </div>
+</form>
+<a href="{{ url_for('home') }}">Go home</a>
+{% endblock %}

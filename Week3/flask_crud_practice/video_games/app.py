@@ -16,10 +16,10 @@ class Game:
         Game.count += 1
 
 
-zelda = Game('Zelda: Breath of the Wild', 'switch', 97)
-horizon = Game('Horizon Zero Dawn', 'ps4', 89)
-mario = Game('Super Mario Odyssey', 'switch', 97)
-injustice = Game('Injustice 2', 'xbone', 89)
+zelda = Game('Zelda: Breath of the Wild', 'Switch', 97)
+horizon = Game('Horizon Zero Dawn', 'PS4', 89)
+mario = Game('Super Mario Odyssey', 'Switch', 97)
+injustice = Game('Injustice 2', 'Xbox One', 89)
 
 games = [zelda, horizon, mario, injustice]
 
@@ -69,3 +69,19 @@ def destroy(id):
     found_game = [game for game in games if id == game.id][0]
     games.remove(found_game)
     return redirect(url_for('index'))
+
+
+# form to edit
+@app.route('/games/<int:id>/edit', methods=['GET'])
+def edit(id):
+    found_game = [game for game in games if id == game.id][0]
+    return render_template('edit.html', game=found_game)
+
+
+@app.route("/games/<int:id>", methods=["PATCH"])
+def update(id):
+    found_game = [game for game in games if game.id == id][0]
+    found_game.name = request.values.get('name')
+    found_game.system = request.values.get('system')
+    found_game.rating = request.values.get('rating')
+    return redirect(url_for('show', id=found_game.id))
