@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
+from flask_modus import Modus
 
 app = Flask(__name__)
+Modus(app)
 
 
 class Game:
@@ -56,3 +58,14 @@ def show(id):
     # need to grab id somehow to add to route
     found_game = [game for game in games if id == game.id][0]
     return render_template('show.html', game=found_game)
+
+
+@app.route('/games/<int:id>', methods=["DELETE"])
+def destroy(id):
+    # need to grab id again
+    # this time we will remove from list
+    # the button on the show.html will activate this function
+    # this function will then grab the id of the game from the url and then run the function
+    found_game = [game for game in games if id == game.id][0]
+    games.remove(found_game)
+    return redirect(url_for('index'))
