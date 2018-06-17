@@ -49,3 +49,10 @@ def create():
         request.values.get('rating'))
     games.append(new_game)
     return redirect(url_for('index'))
+
+
+@app.route('/games/<int:id>', methods=['GET'])
+def show(id):
+    # need to grab id somehow to add to route
+    found_game = [game for game in games if id == game.id][0]
+    return render_template('show.html', game=found_game)

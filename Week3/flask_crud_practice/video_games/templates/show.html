@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- I want to create a page to show each game on it's own -->
+<h1>{{ game.name }} is an AWESOME GAME</h1>
+<ul>
+  <li>Name: {{ game.name }}</li>
+  <li>System: {{ game.system }}</li>
+  <li>Rating: {{ game.rating }}</li>
+</ul>
+<a href="{{ url_for('index') }}">Go back to games on display</a>
+{% endblock %}
