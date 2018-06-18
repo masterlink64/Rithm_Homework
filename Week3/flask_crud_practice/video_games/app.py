@@ -1,27 +1,40 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_modus import Modus
+import psycopg2
+from flask_debugtoolbar import DebugToolbarExtension
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 Modus(app)
+app.config['SECRET_KEY'] = "abc123"
+toolbar = DebugToolbarExtension(app)
+
+# DB global variable for the data base
+DB = "postgresql://localhost/video_games"
+app.config['SQLALCHEMY_DATABASE_URI'] = DB
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = True
+
+db = SQLAlchemy(app)
 
 
-class Game:
-    count = 1
+class Game(db.Model):
+    __tablename__ = "games"
 
-    def __init__(self, name, system, rating):
-        self.name = name
-        self.system = system
-        self.rating = rating
-        self.id = Game.count
-        Game.count += 1
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, unique=True)
+    rating = db.Column(db.Text)
+    system = db.Column(db.Text)
+
+    # self.name = name
+    # self.system = system
+    # self.rating = rating
 
 
-zelda = Game('Zelda: Breath of the Wild', 'Switch', 97)
-horizon = Game('Horizon Zero Dawn', 'PS4', 89)
-mario = Game('Super Mario Odyssey', 'Switch', 97)
-injustice = Game('Injustice 2', 'Xbox One', 89)
-
-games = [zelda, horizon, mario, injustice]
+# create tables as needed
+# will only create tables if it does NOT exist
+# if we want to add new columns we will need to alter
+db.create_all()
 
 
 # home page
@@ -33,6 +46,7 @@ def home():
 # route to show a list of all the games
 @app.route('/games')
 def index():
+    games = Game.query.all()
     return render_template('index.html', games=games)
 
 
