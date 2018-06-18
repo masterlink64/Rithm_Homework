@@ -60,17 +60,23 @@ def new():
 # can this be anything since it's only purpose is to append  a new game?
 @app.route('/games', methods=['POST'])
 def create():
-    new_game = Game(
-        request.values.get('name'), request.values.get('system'),
-        request.values.get('rating'))
-    games.append(new_game)
+    # this is how you grab the values from the form with flask
+    name = request.values.get('name')
+    system = request.values.get('system')
+    rating = request.values.get('rating')
+    # create a new game using the MODEL
+    new_game = Game(name=name, system=system, rating=rating)
+    db.session.add(new_game)
+    db.session.commit()
     return redirect(url_for('index'))
 
 
 @app.route('/games/<int:id>', methods=['GET'])
 def show(id):
     # need to grab id somehow to add to route
-    found_game = [game for game in games if id == game.id][0]
+    #found_game = [game for game in games if id == game.id][0]
+    # SQLAlchemy to grab the id from the given one
+    found_game = Game.query.filter(Game.id == id).one()
     return render_template('show.html', game=found_game)
 
 
