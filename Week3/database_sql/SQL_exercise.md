@@ -53,8 +53,8 @@ Display all of the names and prices of the products.
   VALUES
   ('TV', 500.00, 't');
 
-Display only the products that can*be_returned.
-\*\** All my selects have \ slashes on them added by VSCode? \_\*\*
+Display only the products that can\*be_returned.
+\*\*\* All my selects have \ slashes on them added by VSCode? \_\*\*
 
 - SELECT \* FROM products WHERE can_be_returned='t';
 
@@ -83,63 +83,51 @@ And now the sale is over. For the remaining products, increase their price by $2
 - UPDATE products SET price = price + 20;
 
 Part 2 - Operators and Aggregates
-Let's start with the following sql file called data.sql
 
-DROP DATABASE IF EXISTS aggregates_exercise;
-
-CREATE DATABASE aggregates_exercise;
-
-\c aggregates_exercise
-
-CREATE TABLE snacks (
-id SERIAL PRIMARY KEY,
-name TEXT,
-kind TEXT,
-calories INTEGER,
-price NUMERIC
-);
-
-INSERT INTO snacks
-(name, kind, calories, price)
-VALUES
-('snickers', 'candy bar', 300, 2.99),
-('cupcakes', 'baked goods', 260, 2.49),
-('cake', 'baked goods', 400, 3.99),
-('potato chips', 'chips', 500, 4.99),
-('milky way', 'candy bar', 220, 7.99),
-('cheetos', 'chips', 250, 11.99),
-('chocolate chip cookie', 'baked goods', 290, 2.89),
-('3 musketeers', 'candy bar', 230, 1.99),
-('cheese its', 'chips', 100, 0.99),
-('funions', 'chips', 280, 2.39),
-('fig newtons', 'baked goods', 240, 3.99),
-('fruit roolup', 'fruit snack', 420, 5.39),
-('gushers', 'fruit snack', 220, 3.38),
-('gogurt', 'yogurt', 260, 5.32),
-('capri sun', 'beverage', 300, 1.49),
-('sunny D', 'beverage', 120, 3.99),
-('ice cream', 'frozen', 2000, 5.29),
-('rice krispies', 'baked goods', 300, 1.99),
-('pringles', 'chips', 400, 2.39),
-('twix', 'candy bar', 450, 2.90),
-('payday', 'candy bar', 500, 2.39);
-psql < data.sql
-psql aggregates_exercise
 Write the following queries to perform the following:
 
 Find the names of the top five most caloric snacks.
 
+- SELECT name
+  FROM snacks
+  ORDER BY calories
+  DESC
+  LIMIT 5;
+
 Find the names of the 3 cheapest snacks.
+
+- SELECT name
+  FROM snacks
+  ORDER BY price
+  LIMIT 3;
 
 Calculate the total calories for all the snacks. Call this column total_calories.
 
-Calculate the average price for all the snacks. Call this column average_price.
+- SELECT SUM(calories)
+  AS total_calories
+  FROM snacks;
+  Calculate the average price for all the snacks. Call this column average_price.
+- SELECT AVG(price)
+  AS average_price
+  FROM snacks;
 
 Calculate the lowest price for all the snacks. Call this column lowest_price.
 
+- SELECT MIN(price)
+  AS lowest_price
+  FROM snacks;
+
 Calculate the highest price for all the snacks. Call this column highest_price.
 
+- SELECT MAX(price)
+  AS highest_price
+  FROM snacks;
+
 Find the count for each kind of candy in the table. Your output should look like this:
+
+- SELECT kind, COUNT(kind)
+  FROM snacks
+  GROUP BY kind;
 
 /_
 kind | count
@@ -154,6 +142,11 @@ fruit snack | 2
 _/
 Find the count of each kind of candy where the count is greater than one. Your output should look like this:
 
+- SELECT kind, COUNT(kind)
+  FROM snacks
+  GROUP BY kind
+  HAVING COUNT(kind) > 1;
+
 /_
 kind | count
 -------------+-------
@@ -164,6 +157,12 @@ candy bar | 5
 fruit snack | 2
 _/
 Find the average number of calories for each kind of candy and call the name of your column that contains the average average_calories. Order your output by the kind of candy in ascending order. Your output should look like this.
+
+- SELECT kind, ROUND(AVG(calories))
+  AS average_calories
+  FROM snacks
+  GROUP BY kind
+  ORDER BY kind;
 
 /_
 kind | average_calories
