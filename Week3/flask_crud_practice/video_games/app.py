@@ -25,6 +25,7 @@ class Game(db.Model):
     name = db.Column(db.Text, unique=True)
     rating = db.Column(db.Text)
     system = db.Column(db.Text)
+    # to create
 
     # self.name = name
     # self.system = system
@@ -76,32 +77,41 @@ def show(id):
     # need to grab id somehow to add to route
     #found_game = [game for game in games if id == game.id][0]
     # SQLAlchemy to grab the id from the given one
-    found_game = Game.query.filter(Game.id == id).one()
+    found_game = Game.query.filter(Game.id == id).first()
     return render_template('show.html', game=found_game)
 
 
+# delete using SQLAlchemy
 @app.route('/games/<int:id>', methods=["DELETE"])
 def destroy(id):
     # need to grab id again
     # this time we will remove from list
     # the button on the show.html will activate this function
     # this function will then grab the id of the game from the url and then run the function
-    found_game = [game for game in games if id == game.id][0]
-    games.remove(found_game)
+    # found_game = [game for game in games if id == game.id][0]
+    # filtering by game id, and only grab one
+    found_game = Game.query.filter(Game.id == id).first()
+    db.session.delete(found_game)
+    db.session.commit()
     return redirect(url_for('index'))
 
 
 # form to edit
 @app.route('/games/<int:id>/edit', methods=['GET'])
 def edit(id):
-    found_game = [game for game in games if id == game.id][0]
+    # found_game = [game for game in games if id == game.id][0]
+    found_game = Game.query.filter(Game.id == id).first()
     return render_template('edit.html', game=found_game)
 
 
 @app.route("/games/<int:id>", methods=["PATCH"])
 def update(id):
-    found_game = [game for game in games if game.id == id][0]
+    # found_game = [game for game in games if game.id == id][0]
+    found_game = Game.query.filter(Game.id == id).first()
     found_game.name = request.values.get('name')
     found_game.system = request.values.get('system')
     found_game.rating = request.values.get('rating')
+    # because there is no built in update function
+    db.session.add(found_game)
+    db.session.commit()
     return redirect(url_for('show', id=found_game.id))
