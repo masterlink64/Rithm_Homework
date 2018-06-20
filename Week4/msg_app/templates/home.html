@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+<h1>Best Messaging App Ever</h1>
+<ul> Homelinks
+  <li><a href="{{ url_for('index') }}">See Users</a></li>
+  <li><a href="{{ url_for('new') }}">Add a new User</a></li>
+  <li>add later</li>
+</ul>
+{% endblock %}

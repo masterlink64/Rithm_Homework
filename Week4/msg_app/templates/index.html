@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+<!-- make a list of user names -->
+<h2>Here are the people in our app!</h2>
+<ol>
+  {% for user in users %}
+    <li>{{ user.first_name }} {{ user.last_name }}</li>
+  {% endfor %}
+  </ol>
+{% endblock %}
