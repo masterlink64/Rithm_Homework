@@ -8,6 +8,7 @@
   <p>
     {% for message in user.messages %}
     {{ message.content }} 
+    {{ message.tags.mood }}
     <form action="{{ url_for('msg_destroy',msg_id=message.id) }}?_method=DELETE" method='POST'>
       <button type='submit'>Delete this msg</button>
     </form>

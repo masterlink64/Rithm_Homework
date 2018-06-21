@@ -9,10 +9,10 @@
   <button type='submit'>Create new message!</button>
   <div>
       <h3>Select a tag that describe your mood!</h3>
-      {% for tag in user.messages.tags %}
+      {% for tag in tags %}
       <div>
         <label for="tag_{{ tag.id }}">{{ tag.mood }} </label>
-        <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.mood }}">
+        <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.id }}">
       </div>
       {% endfor %}
     </div>

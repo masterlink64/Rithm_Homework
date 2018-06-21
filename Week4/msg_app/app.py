@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/msg_app"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SECRET_KEY'] = 'fasttimesarerithmhigh'
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+# app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 modus = Modus(app)
 db = SQLAlchemy(app)
@@ -124,14 +124,16 @@ def update(id):
 def msg_index(id):
     # this should SHOW all message
     found_user = User.query.get_or_404(id)
-    return render_template('msg_index.html', user=found_user)
+    tags = Tag.query.all()
+    return render_template('msg_index.html', user=found_user, tags=tags)
 
 
 # message new so that it takes you to a form to fill out messages
 @app.route('/users/<int:id>/messages/new', methods=['GET'])
 def msg_new(id):
     user = User.query.get_or_404(id)
-    return render_template('msg_new.html', user=user)
+    tags = Tag.query.all()
+    return render_template('msg_new.html', user=user, tags=tags)
 
 
 @app.route('/users/<int:id>/messages', methods=['POST'])
@@ -142,8 +144,10 @@ def msg_create(id):
         content=request.values.get('content'), user_id=found_user.id)
     # adding M:M feature with tags
     # *** review
-    tags_ids = request.form.getlist('tags')
-    new_msg.tags = Tag.query.filter(Tag.id.in_(tags_ids)).all()
+    tags_ids = request.form.getlist('tags')  # [1, 2]
+    new_tags = Tag.query.filter(
+        Tag.id.in_(tags_ids)).all()  # [<Tag 1>, <Tag 2>]
+    new_msg.tags = new_tags
     db.session.add(new_msg)
     db.session.commit()
     return redirect(url_for('msg_index', id=found_user.id))
@@ -194,7 +198,7 @@ def tags_index():
 
 @app.route('/tags/new', methods=['GET'])
 def tags_new():
-    return render_template('tags_new.html')
+    return render_template('tags_new.html', tag=Tag.query.all())
 
 
 @app.route('/tags', methods=['POST'])
