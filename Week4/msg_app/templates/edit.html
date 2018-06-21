@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Change user name!</h1>
+<form action="{{ url_for('update', id=user.id) }}?_method=PATCH" method='POST'>
+  <div>
+    <label for="first_name"></label>
+    <input type="text" name='first_name' placeholder="First Name">
+    <input type="text" name='last_name' placeholder="Last Name">
+    <button type="submit">Click to edit user</button>
+  </div>
+</form>
+{% endblock %}

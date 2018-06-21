@@ -3,9 +3,15 @@
 {% block content %} 
 <!-- make a list of user names -->
 <h2>Here are the people in our app!</h2>
+<h3>Click on user for more info!</h3>
 <ol>
   {% for user in users %}
-    <li>{{ user.first_name }} {{ user.last_name }}</li>
+    <li><a hrefs="{{ url_for('show', id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a>
+    <ul>
+      <li><a href="{{ url_for('edit', id=user.id) }}">Edit this user!</a></li>
+      <li><a href="{{ url_for('msg_new', id=user.id) }}">Add new message with this user!</a></li>
+      <li><a href="{{ url_for('msg_index', id=user.id) }}">See all messages from this user</a></li>
+    </ul></li>
   {% endfor %}
   </ol>
 {% endblock %}

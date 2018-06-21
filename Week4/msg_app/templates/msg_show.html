@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Message banner</h1>
+  <div>
+    <p>{{ message.content }}</p>
+    <p>-{{ message.user.first_name }}</p>
+    <p>Your mood: 
+      <ul>
+          {% for tag in messages.tags %}
+            <li>{{ tag.mood}} </li>
+          {% endfor %}
+      </ul>
+    </p>
+  </div>
+  <a href="{{ url_for('index') }}">Go back to users</a>
+  <a href="{{ url_for('home') }}">Home page</a>
+{% endblock %}

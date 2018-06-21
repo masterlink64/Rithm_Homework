@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Create a new tag for your mood here!</h1>
+<form action="{{ url_for('tags_create', tag_id=tag.id) }}" method="POST">
+  <div>
+    <label for="mood">Tag your Mood</label>
+    <input type="text" id='mood' name='mood' placeholder="Mood">
+  </div>
+  <button type='submit'>Create new tag!</button>
+</form>
+{% endblock %}

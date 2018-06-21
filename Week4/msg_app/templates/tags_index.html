@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Tags you can use</h1>
+<div>
+  {% for tag in tags %}
+    <li><a href="{{ url_for('tags_show', tag_id=tag.id) }}">Click {{ tag.mood }} for options</a></li>
+  {% endfor %}
+</div>
+{% endblock %}

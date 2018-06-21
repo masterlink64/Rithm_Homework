@@ -2,9 +2,10 @@
 
 {% block content %} 
 <h1>Best Messaging App Ever</h1>
-<ul> Homelinks
-  <li><a href="{{ url_for('index') }}">See Users</a></li>
-  <li><a href="{{ url_for('new') }}">Add a new User</a></li>
-  <li>add later</li>
+<ul class="nav-bar"> Homelinks
+  <li><a href="{{ url_for('index') }}">See users</a></li>
+  <li><a href="{{ url_for('new') }}">Add a new user</a></li>
+  <li><a href="{{ url_for('tags_index') }}">Show tags for messages</a></li>
+  <li><a href="{{ url_for('tags_new') }}">Add a new tag for your mood!</a></li>
 </ul>
 {% endblock %}
