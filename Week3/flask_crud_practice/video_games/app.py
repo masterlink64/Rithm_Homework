@@ -77,7 +77,7 @@ def show(id):
     # need to grab id somehow to add to route
     #found_game = [game for game in games if id == game.id][0]
     # SQLAlchemy to grab the id from the given one
-    found_game = Game.query.filter(Game.id == id).first()
+    found_game = Game.query.get_or_404(id)
     return render_template('show.html', game=found_game)
 
 
@@ -100,7 +100,7 @@ def destroy(id):
 @app.route('/games/<int:id>/edit', methods=['GET'])
 def edit(id):
     # found_game = [game for game in games if id == game.id][0]
-    found_game = Game.query.filter(Game.id == id).first()
+    found_game = Game.query.get_or_404(id)
     return render_template('edit.html', game=found_game)
 
 
@@ -115,3 +115,8 @@ def update(id):
     db.session.add(found_game)
     db.session.commit()
     return redirect(url_for('show', id=found_game.id))
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404

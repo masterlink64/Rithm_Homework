@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+<link rel="stylesheet" href="index_style.css">
+{% block content %}
+
+  {% for pet in pets %}
+  <div class="card">
+    <img src="{{ pet.photo_url }}" alt="#">
+    <div class="card-body">
+        <h5 class="card-title">{{ pet.name }}</h5>
+        <p class="card-text">{{ pet.notes }}</p>
+        {% if pet.available %}
+        <p class="card-text">{{ pet.name }} is Available!</p>
+        {% endif %}
+        <a href="{{ url_for('edit_pet', pet_id=pet.id) }}" class="btn btn-primary">Edit Info</a>
+      </div>
+  </div>  
+  {% endfor %}
+  <h3>Real Pets from Pet Finder</h3>
+  <div class="card">
+      <img src="{{ real_pic }}" alt="#">
+      <div class="card-body">
+          <h5 class="card-title">{{ name }}</h5>
+          <p class="card-text">filler grab later</p>
+        </div>
+    </div> 
+  </div>
+{% endblock %}
