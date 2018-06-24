@@ -1,11 +1,28 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style-msg_edit.css') }}">
 {% extends 'base.html' %}
 {% block content %}
 <h1>Change your message!</h1>
+<h3>Current message:</h3>
+<div>
+    {{ found_message.content }} 
+    {% for tag in found_message.tags %}
+    <ul class='msg_tags'>
+      <li class='tags'>#{{ tag.mood }}</li>
+    </ul>
+    {% endfor %}
+</div>
+
 <form action="{{ url_for('msg_update', msg_id=msg_id) }}?_method=PATCH" method='POST'>
   <div>
     <label for="content"></label>
-    <input type="text" name='content' placeholder="Change message">
-    <button type="submit">Click to edit user</button>
+    <textarea name="content" id="content" cols="30" rows="10" placeholder="Change message"></textarea>
   </div>
+  {% for tag in tags %}
+  <div>
+      <label for="tag_{{ tag.id }}">#{{ tag.mood }} </label>
+      <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.id }}">
+    </div>
+  {% endfor %}
+  <button class='edit' type="submit">Click to edit message</button>
 </form>
 {% endblock %}

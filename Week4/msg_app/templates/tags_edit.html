@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Change user name!</h1>
+<h1>Edit {{ tag.mood }}</h1>
 <form action="{{ url_for('tags_update', tag_id=tag.id) }}?_method=PATCH" method='POST'>
   <div>
     <label for="mood">Edit tag for your mood</label>
-    <input type="text" name='mood' placeholder="Mood Change">
-    <button type="submit">Click to edit user</button>
+    <input type="text" id='mood' name='mood' placeholder="Mood Change">
   </div>
+  <button type="submit">Click to edit tag</button>
 </form>
 {% endblock %}

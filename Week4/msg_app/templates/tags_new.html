@@ -4,8 +4,10 @@
 <form action="{{ url_for('tags_create', tag_id=tag.id) }}" method="POST">
   <div>
     <label for="mood">Tag your Mood</label>
-    <input type="text" id='mood' name='mood' placeholder="Mood">
   </div>
-  <button type='submit'>Create new tag!</button>
+  <input type="text" id='mood' name='mood' placeholder="Mood">
+  <div>
+    <button type='submit'>Create new tag!</button>
+  </div>
 </form>
 {% endblock %}

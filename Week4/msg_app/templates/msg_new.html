@@ -3,8 +3,9 @@
 <h1>Create a new message here!</h1>
 <form action="{{ url_for('msg_create', id=user.id) }}" method="POST">
   <div>
-    <label for="content">Message</label>
-    <input type="text" id='content' name='content' placeholder="Message in a bottle">
+    <label for="content"></label>
+    <textarea name="content" id="content" cols="30" rows="10" placeholder="Message in a bottle"></textarea>
+    <!-- <input type="text" id='content' name='content' placeholder="Message in a bottle"> -->
   </div>
   <button type='submit'>Create new message!</button>
   <div>

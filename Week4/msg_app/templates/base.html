@@ -5,24 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro" rel="stylesheet">
   <title>Awesome Users</title>
 </head>
 <div class='nav-wrapper'>
   <ul class='nav-bar'>
-    <li><a href="{{ url_for('new') }}">Add a new user</a></li>
-    <li><a href="{{ url_for('tags_new') }}">Add a new tag for your mood!</a></li>
+    <!-- <li class='brand'>Flask-Msgs</li> -->
     <li><a href="{{ url_for('index') }}">Show all users</a></li>
     <li><a href="{{ url_for('tags_index') }}">Show tags for messages</a></li>
+    <li><a href="{{ url_for('new') }}">Add a new user</a></li>
+    <li><a href="{{ url_for('tags_new') }}">Add a new tag</a></li>
   </ul>
 </div>
 <body>
-
-  {% block content %}
-  {% endblock %}
-
-  <hr>
-  <footer>
-    "Warriors are back to back Champs!"
+  <div class="block-content">
+    {% block content %}
+    {% endblock %}
+  </div>
+    
+    <hr>
+    <footer>
+      "Warriors are back to back Champs!"
   </footer>
 </body>
 </html>

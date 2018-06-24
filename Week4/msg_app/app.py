@@ -176,7 +176,12 @@ def msg_destroy(msg_id):
 @app.route('/messages/<int:msg_id>/edit', methods=['GET'])
 def msg_edit(msg_id):
     found_message = Message.query.get_or_404(msg_id)
-    return render_template('msg_edit.html', msg_id=found_message.id)
+    tags = Tag.query.all()
+    return render_template(
+        'msg_edit.html',
+        msg_id=found_message.id,
+        found_message=found_message,
+        tags=tags)
 
 
 # form to edit page
@@ -185,6 +190,11 @@ def msg_edit(msg_id):
 def msg_update(msg_id):
     found_message = Message.query.get_or_404(msg_id)
     found_message.content = request.values.get('content')
+
+    tags_ids = request.form.getlist('tags')  # [1, 2]
+    update_tags = Tag.query.filter(
+        Tag.id.in_(tags_ids)).all()  # [<Tag 1>, <Tag 2>]
+    found_message.tags = update_tags
     db.session.add(found_message)
     db.session.commit()
     return redirect(url_for('msg_index', id=found_message.user_id))
