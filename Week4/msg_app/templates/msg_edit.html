@@ -20,7 +20,13 @@
   {% for tag in tags %}
   <div>
       <label for="tag_{{ tag.id }}">#{{ tag.mood }} </label>
-      <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.id }}">
+      {% for mood in found_message.tags %}
+        {% if mood.mood == tag.mood %}
+        <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.id }}" checked>
+          {% else %}
+            <input type="checkbox" name="tags" id="tag_{{ tag.id }}" value="{{ tag.id }}">
+        {% endif %}
+      {% endfor %}
     </div>
   {% endfor %}
   <button class='edit' type="submit">Click to edit message</button>
