@@ -1,7 +1,10 @@
-from flask import Flask, render_template, request, url_for, redirect
+import os
+
+from flask import Flask, render_template, request, url_for, redirect, session
 from flask_modus import Modus
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/msg_app"
@@ -12,6 +15,7 @@ app.config['SECRET_KEY'] = 'fasttimesatrithmhigh'
 
 modus = Modus(app)
 db = SQLAlchemy(app)
+bcrypt = Bcrypt()
 
 # toolbar= DebugToolbarExtension(app)
 
@@ -21,10 +25,33 @@ db = SQLAlchemy(app)
 class User(db.Model):
     __tablename__ = 'users'
 
+    @classmethod
+    def register(cls, username, password):
+        """ reguster user, hashing at the same time"""
+        hashed = bcrypt.generate_password_hash(password)
+        hashed_utf8 = hashed.decode("utf8")
+        return cls(username=username, password=hashed_utf8)
+
+    @classmethod
+    def authenticate(cls, username, password):
+        """Validate that user exists and password is correct,
+          return user if pw is ok
+          return false is pw false"""
+
+        user = User.query.filter_by(username=username).first()
+        if user:
+            # comparing user.password hash vs password hash that was passed in
+            if bcrypt.check_password_hash(user.password, password):
+                return user
+
+        return False
+
     # real fields in table
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.Text, nullable=False)
     last_name = db.Column(db.Text, nullable=False)
+    username = db.Column(db.Text, nullable=False)
+    password = db.Column(db.Text)
 
     # virtual "field" SQLA makes
     messages = db.relationship('Message', backref='user')
@@ -78,11 +105,18 @@ def new():
 
 @app.route('/users', methods=['POST'])
 def create():
-    # need to create first and last name
-    # add and commit to db
+    """need to create new user and hash pw
+    add and commit to db"""
+    # hashing pw
+    password = request.form.get('password')
+    hashed = bcrypt.generate_password_hash(password)
+    hashed_utf8 = hashed.decode('utf8')
+
     new_user = User(
         first_name=request.values.get('first_name'),
-        last_name=request.values.get('last_name'))
+        last_name=request.values.get('last_name'),
+        username=request.values.get('username'),
+        password=hashed_utf8)
     db.session.add(new_user)
     db.session.commit()
     return redirect(url_for('index'))
@@ -251,3 +285,34 @@ def tags_update(tag_id):
     db.session.add(found_tag)
     db.session.commit()
     return (redirect(url_for('tags_show', tag_id=found_tag.id)))
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """ produce login form and handle login """
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User.authenticate(username, password)
+        if user:
+            session['user_id'] = user.username
+            return redirect(url_for('logged'))
+
+    return render_template('login.html')
+
+
+@app.route('/logged', methods=['GET'])
+def logged():
+    """ paged showing when logged in """
+    if 'user_id' in session:
+        return render_template('logged.html')
+    else:
+        return redirect(url_for('index'))
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    """ to handle logging out by deleteing session id """
+    del session['user_id']
+    return redirect(url_for('index'))

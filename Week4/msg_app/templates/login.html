@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Login Here</h1>
+<form action="{{ url_for('login') }}" method="POST">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id='username' name='username' placeholder="user">
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id='password' name='password' placeholder="pw">
+  </div>
+  <button type='submit'>Login!</button>
+</form>
+{% endblock %}
