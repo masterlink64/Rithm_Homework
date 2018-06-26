@@ -1,0 +1,11 @@
+.msg-content {
+  border: 4px #ffcc5c;
+  border-style: solid;
+  padding: 10px;
+  height: 150px;
+  width: 300px;
+}
+
+ul {
+  list-style: none;
+}

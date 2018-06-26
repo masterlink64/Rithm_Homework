@@ -1,17 +1,21 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='style-msg_show.css') }}">
 {% extends 'base.html' %}
 {% block content %}
-<h1>Message banner</h1>
-  <div>
-    <p>{{ message.content }}</p>
-    <p>-{{ message.user.first_name }}</p>
-    <p>Your mood: 
-      <ul>
-          {% for tag in message.tags %}
-            <li>{{ tag.mood}} </li>
-          {% endfor %}
-      </ul>
-    </p>
-  </div>
+<h1>This Wonderful Message</h1>
+<div class='msg-content'>
+  <p>{{ message.content }}</p>
+  <p>-{{ message.user.first_name }}</p>
+</div>
+  
+<div>
+  <p>Your mood: 
+    <ul>
+        {% for tag in message.tags %}
+          <li># {{ tag.mood}} </li>
+        {% endfor %}
+    </ul>
+  </p>
+</div>
   <a href="{{ url_for('index') }}">Go back to users</a>
   <a href="{{ url_for('home') }}">Home page</a>
 {% endblock %}

@@ -7,12 +7,13 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://localhost/msg_app"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['SECRET_KEY'] = 'fasttimesarerithmhigh'
+app.config['SECRET_KEY'] = 'fasttimesatrithmhigh'
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 modus = Modus(app)
 db = SQLAlchemy(app)
-toolbar = DebugToolbarExtension(app)
+
+# toolbar= DebugToolbarExtension(app)
 
 
 #  need to create a database for user first

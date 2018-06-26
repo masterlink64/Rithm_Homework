@@ -6,12 +6,13 @@
 <h3>Click on user for more info!</h3>
 <ol>
   {% for user in users %}
-    <li><a hrefs="{{ url_for('show', id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a>
+    <li><a href="{{ url_for('show', id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a></li>
     <ul>
       <li><a href="{{ url_for('edit', id=user.id) }}">Edit this user!</a></li>
       <li><a href="{{ url_for('msg_new', id=user.id) }}">Add new message with this user!</a></li>
       <li><a href="{{ url_for('msg_index', id=user.id) }}">See all messages from this user</a></li>
-    </ul></li>
+
+    </ul>
   {% endfor %}
   </ol>
 {% endblock %}

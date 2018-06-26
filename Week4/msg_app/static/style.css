@@ -19,6 +19,7 @@ button {
 .block-content {
   display: flex;
   flex-direction: column;
+  font-size: 1.2em;
   margin: 20px;
   padding: 10px;
 }
@@ -71,4 +72,8 @@ button {
     margin: 10px;
     display: inline-flex;
   }
+}
+
+footer {
+  font-size: 1.8em;
 }
