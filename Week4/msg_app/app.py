@@ -52,6 +52,7 @@ class User(db.Model):
     last_name = db.Column(db.Text, nullable=False)
     username = db.Column(db.Text, nullable=False)
     password = db.Column(db.Text)
+    img_url = db.Column(db.Text)
 
     # virtual "field" SQLA makes
     messages = db.relationship('Message', backref='user')

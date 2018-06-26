@@ -3,16 +3,45 @@
 {% block content %} 
 <!-- make a list of user names -->
 <h2>Here are the people in our app!</h2>
-<h3>Click on user for more info!</h3>
 <ol>
+  <table style='width:100%'>
+    <tr>
+      <th>Picture</th>
+      <th>First Name and Last Name</th>
+      <th>Username</th>
+      <th>Options</th>
+    </tr>
   {% for user in users %}
-    <li><a href="{{ url_for('show', id=user.id) }}">{{ user.first_name }} {{ user.last_name }}</a></li>
-    <ul>
-      <li><a href="{{ url_for('edit', id=user.id) }}">Edit this user!</a></li>
-      <li><a href="{{ url_for('msg_new', id=user.id) }}">Add new message with this user!</a></li>
-      <li><a href="{{ url_for('msg_index', id=user.id) }}">See all messages from this user</a></li>
-
-    </ul>
-  {% endfor %}
+    <tr>
+      <td>Image Filler</td>
+      <td>{{ user.first_name }} {{ user.last_name }}</td>
+      <td>{{ user.username }}</td>
+      <td>
+        <form>
+          <button type='submit' formaction="{{ url_for('show', id=user.id) }}" formmethod="GET">
+            Show
+          </button>
+          <button type='submit' formaction="{{ url_for('edit', id=user.id) }}" formmethod="GET">
+            Edit
+          </button>
+          <button type='submit' formaction="{{ url_for('msg_new', id=user.id) }}" formmethod="GET">
+            Add New Message
+          </button>
+          <button type='submit' formaction="{{ url_for('msg_index', id=user.id) }}" formmethod="GET">
+            See All Message from User
+          </button>
+          <button type='submit' formaction="{{ url_for('destroy', id=user.id) }}?_method=DELETE" formmethod="POST">
+             Delete User
+          </button>
+        </form>
+      </td>
+    </tr>
+      {% endfor %}
+    </table>
   </ol>
 {% endblock %}
+
+
+
+
+      

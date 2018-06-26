@@ -30,6 +30,9 @@
       <br>
       {% if session['user_id'] %}
         You are logged in as {{ session['user_id'] }}
+        <form action="{{ url_for('logout') }}" method='POST'>
+          <button type='submit'>Log out</button>
+        </form>
       {% endif %}
   </footer>
 </body>
