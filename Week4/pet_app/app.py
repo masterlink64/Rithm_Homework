@@ -57,9 +57,8 @@ class EditPetForm(FlaskForm):
 db.create_all()
 
 
-@app.route('/', methods=['GET'])
-def index():
-    pets = Pet.query.all()
+def get_petfinder_info():
+    """get random pet from PetFinder API. returns dict of infor about pet."""
     # key
     pet_key = os.environ['PET_KEY']
     # get info from another API
@@ -72,8 +71,14 @@ def index():
 
     real_pic = real_pets.json()['petfinder']['pet']['media']['photos'][
         'photo'][2]['$t']
-    return render_template(
-        'index.html', pets=pets, name=name, real_pic=real_pic)
+    return {'name': name, 'real_pic': real_pic}
+
+
+@app.route('/', methods=['GET'])
+def index():
+    pets = Pet.query.all()
+    pet_info = get_petfinder_info()
+    return render_template('index.html', pets=pets, pet_info=pet_info)
 
 
 @app.route('/add', methods=['GET'])
