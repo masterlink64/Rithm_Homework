@@ -6,36 +6,30 @@ const morgan = require('morgan');
 // relative path for each route.js file
 const usersRoutes = require('./routes/users');
 const companiesRoutes = require('./routes/companies');
+const jobsRoutes = require('./routes/jobs');
 
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use('/users/', usersRoutes);
-app.user('/companies', companiesRoutes);
+app.use('/users', usersRoutes);
+app.use('/companies', companiesRoutes);
+app.use('/jobs', jobsRoutes);
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
+// error handling
+app.use(function(req, res, next) {
+  let err = new Error('Not Found');
   err.status = 404;
-  return next(err); // pass the error to the next piece of middleware
+  return next(err);
 });
 
-/* 
-  error handler - for a handler with four parameters, 
-  the first is assumed to be an error passed by another
-  handler's "next"
- */
-app.use((err, req, res, next) => {
+app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  return res.json({
-    message: err.message,
-    /*
-     if we're in development mode, include stack trace (full error object)
-     otherwise, it's an empty object so the user doesn't see all of that
-    */
-    error: app.get('env') === 'development' ? err : {}
+  res.send({
+    error: {
+      message: err.message || 'Internal Server Error'
+    }
   });
 });
 
 app.listen(3000, () => {
-  console.log('server for USERS starting on port 3000');
+  console.log('server for USERS/COMPANIES/JOBS starting on port 3000');
 });

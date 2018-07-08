@@ -6,8 +6,14 @@ const db = require('../db/index');
 router.post('', async (req, res, next) => {
   try {
     const data = await db.query(
-      'INSERT INTO users (first_name, last_name, email, photo) VALUES ($1, $2, $3, $4) RETURNING *',
-      [req.body.first_name, req.body.last_name, req.body.email, req.body.photo]
+      'INSERT INTO users (first_name, last_name, email, photo, current_company_id) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [
+        req.body.first_name,
+        req.body.last_name,
+        req.body.email,
+        req.body.photo,
+        req.body.current_company_id
+      ]
     );
     return res.json(data.rows[0]);
   } catch (err) {
@@ -27,10 +33,26 @@ router.get('', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     // query for a user WHERE id matches the params passed in
-    const data = await db.query('SELECT * FROM users WHERE id=$1', [
+    const rawData = await db.query('SELECT * FROM users WHERE id=$1', [
       req.params.id
     ]);
-    return res.json(data.rows[0]);
+    const user = rawData.rows[0];
+    // query for jobs that has this user id using a M:M join!!!
+    // select a column from
+    const jobsArr = await db.query(
+      `
+      SELECT jobs.title FROM jobs
+        JOIN jobs_users ON jobs.id=jobs_users.job_id
+        JOIN users ON users.id=jobs_users.user_id
+      WHERE users.id=$1
+    `,
+      [req.params.id]
+    );
+    const jobsTitle = jobsArr.rows.map(job => {
+      return job.title;
+    });
+    user.jobs = jobsTitle;
+    return res.json(user);
   } catch (err) {
     return next(err);
   }
@@ -39,12 +61,13 @@ router.get('/:id', async (req, res, next) => {
 router.patch('/:id', async (req, res, next) => {
   try {
     const data = await db.query(
-      'UPDATE users SET first_name=$1, last_name=$2, email=$3, photo=$4 WHERE id=$5 RETURNING *',
+      'UPDATE users SET first_name=$1, last_name=$2, email=$3, photo=$4, current_company_id=$5 WHERE id=$6 RETURNING *',
       [
         req.body.first_name,
         req.body.last_name,
         req.body.email,
         req.body.photo,
+        req.body.current_company_id,
         req.params.id
       ]
     );
