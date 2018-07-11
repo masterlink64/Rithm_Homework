@@ -89,9 +89,9 @@ patching a single job
 INSERT INTO jobs_users
   (job_id, user_id)
 VALUES
-  (1, 3),
-  (2, 5),
-  (3, 1),
+  (1, 1),
+  (2, 1),
+  (2, 2),
   (5, 6),
   (3, 4),
   (4, 2),
@@ -99,5 +99,12 @@ VALUES
   (1, 4)
 
 -- and more
+
+INSERT INTO jobs_users
+  (user_id, job_id)
+VALUES
+  (1, 1),
+  (2, 1),
+  (2, 2)
 
 
