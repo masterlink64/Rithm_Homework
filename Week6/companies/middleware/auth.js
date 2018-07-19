@@ -37,9 +37,9 @@ function correctUser(req, res, next) {
     const urlId = +req.params.id;
     const token = req.headers.authorization;
     //console.log(token);
-    console.log(urlId);
+    //console.log(urlId);
     const decodedToken = jsonwebtoken.verify(token, 'Steve');
-    console.log(decodedToken);
+    //console.log(decodedToken);
     // change later back to user_id
     if (decodedToken.user_id === urlId) {
       return next();
