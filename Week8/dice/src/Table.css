@@ -1,0 +1,9 @@
+.Table {
+  display: flex;
+  height: 500px;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  background-color: lightgreen;
+  border: 4px ridge brown;
+  margin: 2em;
+}

@@ -1,39 +1,21 @@
 import React, { Component } from 'react';
+import Todo from './Todo';
+import './TodoList.css';
 
-class TodoList extends Component {
+export default class TodoList extends Component {
   render() {
-    // list all of todo list
-    // should have an array called todos
-    let todos = [
-      {
-        name: 'relax',
-        id: 1,
-        done: false
-      },
-      {
-        name: 'study',
-        id: 2,
-        done: false
-      },
-      {
-        name: 'have fun',
-        id: 3,
-        done: false
-      }
-    ];
-    // it should list all of the Todo components
-    return todos.map(t => {
-      return <Todo name={t.name} key={t.id} done={t.done} />;
-    });
+    // map out an arr of todo tasks
+    // when making a todo component will need to add logic whether it had been clicked?
+    const todos = this.props.todosArr.map((todo, idx) => (
+      <li key={idx}>
+        <Todo todo={todo.todo} />
+      </li>
+    ));
+    return (
+      <div className="TodoList">
+        {/* will render all the todos */}
+        <ol>{todos}</ol>
+      </div>
+    );
   }
 }
-
-// Todo component should display the task necessary to complete
-class Todo extends Component {
-  render() {
-    const { name, done } = this.props;
-    return <li>{name}</li>;
-  }
-}
-
-export default TodoList;

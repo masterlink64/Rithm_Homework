@@ -1,11 +1,14 @@
-.Todolist {
-  display: flex;
+.Dice {
+  height: 200px;
+  width: 200px;
+  background-color: salmon;
+  display: inline-flex;
   /* justify-content is for horizontal adjustment */
   justify-content: center;
   /* align-ITEMS NOT content is for centering vertical adjustment */
   align-items: center;
+  color: blue;
+  font-size: 2.5em;
   margin: auto;
-  height: 400px;
-  width: 400px;
-  background-color: lightcyan;
+  margin-top: 1em;
 }
