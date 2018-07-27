@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>MOOD</title>
+  <style>
+   h1 {
+    display: flex; 
+    color: blue;
+    justify-content: center;
+   }
+   .container {
+      margin: 50px; 
+      padding: 10px;
+      position: relative;
+      text-align: center; 
+      border: 2px solid gold; 
+      border-radius: 10px;
+    }
+    body {
+      background-color: seashell;
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+
+</head>
+<body>
+  <div class='container'>
+    <h1>Mood</h1>
+    <h2 id='mood'></h2>
+    <div>
+      <button id='flip'>flip table</button>
+      <button id='bear'>bear flip</button>
+      <button id='angry'>angry</button>
+      <button id='flowers'>flowers</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.js"></script>
+  <script>
+    // state can be anything else
+    // state usually an object
+    function rootReducer(state='(＾ω＾)', action){
+      // can you switch syntax
+
+      if(action.type === 'FLIP'){
+        return '༼ノ◕ヮ◕༽ノ︵┻━┻'
+      } else if(action.type === 'BEAR'){
+        return 'ʕノ•ᴥ•ʔノ ︵ ┻━┻'
+      } else if(action.type === 'ANGRY') {
+        return 'ლಠ益ಠ)ლ'
+      } else if (action.type === 'FLOWERS') {
+        return '✿◕ ‿ ◕✿'
+      }
+      return state;
+    }
+
+    var store = Redux.createStore(rootReducer)
+
+    $(document).ready(function() {
+      var initialState = store.getState()
+      $('#mood').text(initialState)
+      $('#flip').on('click', function(event) {
+        // dispatch 
+        store.dispatch({type:'FLIP'});
+        var updatedState = store.getState()
+        $('#mood').text(updatedState)
+      })
+
+      $('#bear').on('click', function(event) {
+        store.dispatch({type: 'BEAR'});
+        var updatedState = store.getState()
+        $('#mood').text(updatedState);
+      })
+
+      $('#angry').on('click', function(event) {
+        store.dispatch({type:'ANGRY'});
+        var updatedState = store.getState()
+        $('#mood').text(updatedState);
+      })
+
+      $('#flowers').on('click', function(event) {
+        store.dispatch({type:'FLOWERS'});
+        var updatedState = store.getState()
+        $('#mood').text(updatedState);
+      })
+    })
+
+  </script>
+</body>
+</html>

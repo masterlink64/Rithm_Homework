@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.js">
+  // make a reducer taht if state is undefined = 0
+    function rootReducer(state=0, action) {
+      if (action.type === 'INCREMENT') {
+        // state += 1; DONT DO
+        return state + 1;
+      } else if (action.type === 'DECREMENT') {
+        // state -= 1; DONT MUTATE STATE
+        return state - 1;
+      }
+      return state;
+      // can do switch statements as well
+      // Switch('case')
+        // logic
+        // break
+    } 
+    // make store with reducer
+    var store = Redux.createStore(rootReducer);
+    // store.getState() 
+    // store.dispatch({type: 'INCREMENT'})
+    // store.getState()
+    // store.displatch({type:'DECREMENT'})
+    // store.getState()
+    </script>
+</body>
+</html>
