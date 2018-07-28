@@ -17,6 +17,13 @@ class PostList extends Component {
               delete={() =>
                 this.props.dispatch({ type: 'DELETE', id: post.id })
               }
+              edit={editedPost =>
+                this.props.dispatch({ type: 'EDIT', id: post.id, editedPost })
+              }
+              toggleEdit={() => {
+                this.props.dispatch({ type: 'TOGGLE_EDIT', id: post.id });
+              }}
+              isEditing={post.isEditing}
             />
           ))}
         </h3>

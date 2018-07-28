@@ -40,22 +40,28 @@ class NewPostForm extends Component {
             });
           }}
         >
-          <label htmlFor="Title">Title</label>
+          <div>
+            <label htmlFor="Title">Title</label>
+          </div>
           <input
             value={this.state.title}
             type="text"
             id="Title"
             onChange={this.handleTitleChange}
           />
-          <label htmlFor="Body">Body</label>
-          <textarea
-            name="Body"
-            id="Body"
-            cols="30"
-            rows="10"
-            onChange={this.handleBodyChange}
-            value={this.state.body}
-          />
+          <div>
+            <div>
+              <label htmlFor="Body">Body</label>
+            </div>
+            <textarea
+              name="Body"
+              id="Body"
+              cols="30"
+              rows="10"
+              onChange={this.handleBodyChange}
+              value={this.state.body}
+            />
+          </div>
           <input type="submit" value="add" />
         </form>
       </div>
